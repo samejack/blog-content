@@ -12,7 +12,7 @@
   } else {
     this[name] = definition();
   }
-}('Universal', function (initServerHostname, initLogger, request) {
+}('UniversalPlus', function () {
   var privateVar = 'I_AM_PRIVATE_VAR';
 
   var privateFn = function () {
