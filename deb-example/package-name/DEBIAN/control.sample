@@ -1,0 +1,10 @@
+Package: package-name
+Version: 0.0.0-0
+Architecture: all
+Maintainer: SJ Chou <sj@toright.com>
+Installed-Size: 0
+Depends: php5 (>=5.5.9), php5-curl (>=5.5.9), php5-mongo (>=1.4.5)
+Section: web
+Priority: optional
+Homepage: http://blog.toright.com
+Description: This is bebian package build example
