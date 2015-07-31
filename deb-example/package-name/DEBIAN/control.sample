@@ -7,4 +7,4 @@ Depends: php5 (>=5.5.9), php5-curl (>=5.5.9), php5-mongo (>=1.4.5)
 Section: web
 Priority: optional
 Homepage: http://blog.toright.com
-Description: This is bebian package build example
+Description: This is debian package build example
