@@ -1,0 +1,17 @@
+#!/bin/bash
+ 
+while read oldrev newrev refname
+do
+    for rev in $(git rev-list ${oldrev}..${newrev})
+    do
+        log=`git show -s --format="%s" $rev`
+        author=`git show -s --format="%an" $rev`
+        ./hooks/redmine-add-change-log.php "${log}" "${author}" "${rev}"
+        if [ $? != 0 ]
+        then
+            exit $?
+        fi
+    done
+done
+ 
+exit 0
