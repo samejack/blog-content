@@ -1,5 +1,10 @@
 #!/bin/bash
- 
+
+# ignore tag push
+if [[ "$3" == "refs/tags/"* ]]; then
+  exit 0
+fi
+
 while read oldrev newrev refname
 do
     for rev in $(git rev-list ${oldrev}..${newrev})
