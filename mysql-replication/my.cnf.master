@@ -1,0 +1,58 @@
+[client]
+port        = 3306
+socket      = /var/run/mysqld/mysqld.sock
+
+[mysqld_safe]
+socket      = /var/run/mysqld/mysqld.sock
+nice        = 0
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+bind-address    = 0.0.0.0
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+key_buffer         = 16M
+max_allowed_packet = 16M
+thread_stack       = 192K
+max_connections    = 5000
+table_cache        = 64
+thread_concurrency = 8
+query_cache_limit  = 1M
+query_cache_size   = 16M
+query_cache_type   = 1
+
+log_error          = /var/log/mysql/error.log
+log_slow_queries   = /var/log/mysql/mysql-slow.log
+long_query_time    = 2
+log-queries-not-using-indexes
+
+# 需要才打開 slow log
+server-id          = 1
+log_bin            = /var/lib/mysql/mysql-bin.log
+log-slave-updates  = 1
+expire_logs_days   = 10
+max_binlog_size    = 100M
+innodb_flush_log_at_trx_commit = 1
+sync_binlog        = 1
+read_only          = 0
+
+# innodb tune (optional)
+innodb_change_buffering      = all
+innodb_adaptive_hash_index   = ON
+innodb_max_dirty_pages_pct   = 80
+innodb_buffer_pool_size      = 256M
+innodb_buffer_pool_instances = 2
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 16M
+
+!includedir /etc/mysql/conf.d/
