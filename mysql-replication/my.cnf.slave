@@ -36,7 +36,7 @@ log-queries-not-using-indexes
 
 server-id          = 2
 log_bin            = /var/lib/mysql/mysql-bin.log
-log-slave-updates  = 1
+log-slave-updates  = 0
 expire_logs_days   = 10
 max_binlog_size    = 100M
 innodb_flush_log_at_trx_commit = 1
