@@ -28,7 +28,7 @@ query_cache_limit  = 1M
 query_cache_size   = 16M
 query_cache_type   = 1
 
-# 需要才打開 slow log
+# slow log (optional)
 log_error          = /var/log/mysql/error.log
 log_slow_queries   = /var/log/mysql/mysql-slow.log
 long_query_time    = 2
@@ -40,7 +40,7 @@ log-slave-updates  = 1
 expire_logs_days   = 10
 max_binlog_size    = 100M
 innodb_flush_log_at_trx_commit = 1
-sync_binlog        = 1
+sync_binlog        = 0
 read_only          = 1
 
 # innodb tune (optional)
