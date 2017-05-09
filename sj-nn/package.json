@@ -1,0 +1,22 @@
+{
+  "name": "sj-nn",
+  "version": "1.0.0",
+  "description": "neural network example",
+  "main": "index.js",
+  "dependencies": {
+    "csvtojson": "^1.1.4",
+    "node-neural-network": "^1.0.3",
+    "step": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "example": "node index.js"
+  },
+  "keywords": [
+    "neural",
+    "network",
+    "nodejs"
+  ],
+  "author": "sj",
+  "license": "ISC"
+}
