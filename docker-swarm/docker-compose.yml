@@ -1,0 +1,29 @@
+version: '3.2'
+services:
+  server:
+    image: samejack/php5-fpm-nginx:latest
+    hostname: server
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "80:80"
+    volumes:
+      - /root/wordpress:/usr/share/nginx/html
+    deploy:
+      replicas: 2
+      placement:
+        constraints: [node.labels.server == true]
+  mysql:
+    image: samejack/mysql:latest
+    hostname: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_USER_NAME=wordpress
+      - MYSQL_USER_PASSWORD=5678
+    volumes:
+      - /root/mysql-data:/var/lib/mysql
+    deploy:
+      placement:
+        constraints: [node.labels.mysql == true]
