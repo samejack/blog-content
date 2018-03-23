@@ -1,0 +1,13 @@
+defaults
+  log     global
+  mode    http
+
+listen frontend 0.0.0.0:8080
+  mode http
+  stats enable
+  stats uri /haproxy?stats
+  balance roundrobin
+  option httpclose
+  option forwardfor
+  {{range gets "/app/servers/*"}}
+  server {{base .Key}} {{.Value}}:80 check{{end}}
