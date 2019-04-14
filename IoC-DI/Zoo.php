@@ -17,8 +17,7 @@ class Zoo {
 
     public function __constructor()
     {
-        $this->_smallAnimal = new Cat();
-        $this->_largeAnimal = new Horse();
+        // nothing to do
     }
 
     public function setSmallAnimal(Interface_Animal &$animal)
