@@ -1,0 +1,106 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-apache
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: php-apache
+  template:
+    metadata:
+      labels:
+        app: php-apache
+    spec:
+      containers:
+      - image: php:7.2-apache
+        name: php-apache
+        ports:
+        - containerPort: 80
+          name: php-apache
+        volumeMounts:
+          - mountPath: "/var/www/html"
+            name: apache-www
+      volumes:
+      - name: apache-www
+        persistentVolumeClaim:
+          claimName: pvc-apache-www
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: 1qaz2wsx
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-data
+      volumes:
+      - name: mysql-data
+        persistentVolumeClaim:
+          claimName: pvc-mysql-data
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: install-adminer
+spec:
+  template:
+    spec:
+      containers:
+      - image: php:7.2-apache
+        name: php-apache
+        volumeMounts:
+          - mountPath: "/var/www/html"
+            name: apache-www
+        command: ["bash", "-c", "curl -L 'https://github.com/vrana/adminer/releases/download/v4.7.0/adminer-4.7.0.php' -o adminer.php"]
+      volumes:
+      - name: apache-www
+        persistentVolumeClaim:
+          claimName: pvc-apache-www
+      restartPolicy: Never
+  backoffLimit: 4
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    nodePort: 30080
+    targetPort: 80
+  - name: https
+    port: 443
+    protocol: TCP
+    nodePort: 30443
+    targetPort: 443
+  selector:
+    app: php-apache
