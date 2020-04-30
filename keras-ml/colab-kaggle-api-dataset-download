@@ -1,0 +1,64 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Kaggle API Dataset Download.ipynb",
+      "provenance": [],
+      "collapsed_sections": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "accelerator": "GPU"
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "TAQRWCI47MBK",
+        "colab_type": "code",
+        "outputId": "30ef615f-9d6c-4c17-f14e-3dec7f12b659",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 85
+        }
+      },
+      "source": [
+        "#!pip install kaggle\n",
+        "api_token = {\"username\":\"your_username\",\"key\":\"your_token\"}\n",
+        "import json\n",
+        "import zipfile\n",
+        "import os\n",
+        "\n",
+        "if not os.path.exists(\"/root/.kaggle\"):\n",
+        "    os.makedirs(\"/root/.kaggle\")\n",
+        "\n",
+        "with open('/root/.kaggle/kaggle.json', 'w') as file:\n",
+        "    json.dump(api_token, file)\n",
+        "!chmod 600 /root/.kaggle/kaggle.json\n",
+        "\n",
+        "if not os.path.exists(\"/kaggle\"):\n",
+        "    os.makedirs(\"/kaggle\")\n",
+        "os.chdir('/kaggle')\n",
+        "!kaggle datasets download -d chetankv/dogs-cats-images --force\n",
+        "\n",
+        "!ls /kaggle"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Downloading dogs-cats-images.zip to /kaggle\n",
+            " 95% 413M/435M [00:01<00:00, 268MB/s]\n",
+            "100% 435M/435M [00:01<00:00, 256MB/s]\n",
+            "dogs-cats-images.zip\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    }
+  ]
+}
